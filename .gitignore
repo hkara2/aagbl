@@ -1,3 +1,9 @@
+# jEdit backup files
+*~
+
+# Emacs (and others) autosave files
+\#*\#
+
 # https://raw.githubusercontent.com/github/gitignore/main/Gradle.gitignore
 .gradle
 **/build/
@@ -26,3 +32,4 @@ gradle-app.setting
 
 # Local files
 local
+

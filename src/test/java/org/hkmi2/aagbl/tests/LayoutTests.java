@@ -1,16 +1,27 @@
 package org.hkmi2.aagbl.tests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.io.BufferedReader;
 import java.io.StringReader;
+import java.util.List;
 
+import org.hkmi2.aagbl.AsciiArtGridBagLayout;
 import org.hkmi2.aagbl.CRect;
 import org.hkmi2.aagbl.LayoutParseException;
 import org.hkmi2.aagbl.LayoutParser;
 import org.junit.jupiter.api.Test;
 
-class LayoutTests
+/**
+ * Tests for various layouts
+ */
+public class LayoutTests
 {
 
+  /**
+   * Test spec parsing
+   * @throws LayoutParseException If the spec is bad
+   */
   @Test
   void testParseSpec1() throws LayoutParseException {
 
@@ -31,6 +42,10 @@ class LayoutTests
     }
   }
 
+  /**
+   * Test spec parsing
+   * @throws LayoutParseException If spec is bad
+   */
   @Test
   void testParseSpec2() throws LayoutParseException {
 
@@ -53,6 +68,10 @@ class LayoutTests
     }
   }
 
+  /**
+   * Test spec parsing
+   * @throws LayoutParseException If spec is bad
+   */
   @Test
   void testParseSpec3() throws LayoutParseException {
 
@@ -74,6 +93,10 @@ class LayoutTests
     }
   }
 
+  /**
+   * Test spec parsing
+   * @throws LayoutParseException If spec is bad
+   */
   @Test
   void testParseSpec4() throws LayoutParseException {
 
@@ -89,12 +112,40 @@ class LayoutTests
         "+-------------------+\n";
     ;
     LayoutParser parser = new LayoutParser();
+    LayoutParser.debugParser = true;
     parser.parseSpec(parser.readSpec(new BufferedReader( new StringReader(spec) )));
+    List<CRect> rects = parser.getCRects();
+    assertEquals("n", rects.get(0).name);
+    assertEquals("i2", rects.get(1).name);
+    assertEquals("i3", rects.get(2).name);
     for (CRect r : parser.getCRects()) {
       System.out.println(r);
     }
+    AsciiArtGridBagLayout aagbl = new AsciiArtGridBagLayout(spec);
+    assertEquals(20, aagbl.getMaxX());
+    assertEquals(8, aagbl.getMaxY());
   }
-
-
+  
+  /**
+   * Test calculation of rectangle lengths
+   * @throws LayoutParseException if spec is bad
+   */
+  @Test
+  public void testLengthCalc() throws LayoutParseException {
+      String spec = 
+              "+---+\n"+
+              "| A |\n"+
+              "+-+-+\n"+
+              "|B|C|\n"+
+              "+-+-+\n";
+          ;
+      LayoutParser parser = new LayoutParser();
+      LayoutParser.debugParser = true;
+      parser.parseSpec(parser.readSpec(new BufferedReader( new StringReader(spec) )));
+      List<CRect> rects = parser.getCRects();
+      for (CRect r : rects) {
+          System.out.println(r);
+      }
+  }
 
 }

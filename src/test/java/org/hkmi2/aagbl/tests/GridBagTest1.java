@@ -2,31 +2,42 @@ package org.hkmi2.aagbl.tests;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.StringReader;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import org.hkmi2.aagbl.GridBagLayoutBuilder;
+import org.hkmi2.aagbl.AsciiArtGridBagLayout;
 import org.hkmi2.aagbl.LayoutParseException;
-import org.hkmi2.aagbl.LayoutParser;
 
+/**
+ * Test of simple specs layout.
+ * Components are anchored at various places.
+ */
 public class GridBagTest1
 implements ActionListener
 {
-  GridBagLayoutBuilder gblb;
+  AsciiArtGridBagLayout aagbl;
   JLabel cA = new JLabel("A");
   JTextArea cB = new JTextArea("B is a big component with lots of text");
   JButton cC = new JButton("C");
   JTextField cD = new JTextField("D");
   
+  JPanel mainPanel = new JPanel();
+  
+  /**
+   * Constructor
+   */
   public GridBagTest1() {
   }
 
+  /**
+   * Init the class with the spec
+   * @throws LayoutParseException If parsing failed
+   */
   public void init() throws LayoutParseException {
     String spec = 
         "+-----+-----------------+\n"+
@@ -42,24 +53,32 @@ implements ActionListener
         "|     |                D|\n"+
         "+-----+-----------------+\n"
     ;
-    LayoutParser parser = new LayoutParser();
-    parser.parseSpec(parser.readSpec(new BufferedReader( new StringReader(spec) )));
-    gblb = new GridBagLayoutBuilder(parser.getCRects());
-    gblb.add("A", cA);
-    gblb.add("B", cB);
-    gblb.add("C", cC);
-    gblb.add("D", cD);
+    aagbl = new AsciiArtGridBagLayout(spec);
+    aagbl.setConstraints("A", cA);
+    aagbl.setConstraints("B", cB);
+    aagbl.setConstraints("C", cC);
+    aagbl.setConstraints("D", cD);
     cC.addActionListener(this);
+    mainPanel.setLayout(aagbl);
+    aagbl.addAllComponentsTo(mainPanel);
   }
   
+  /**
+   * Run the test app
+   */
   public void run() {
     JFrame jfrm = new JFrame("testGridBag1()");
     jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    jfrm.setContentPane(gblb.getJPanel());
+    jfrm.setContentPane(mainPanel);
     jfrm.pack();
     jfrm.setVisible(true);    
   }
   
+  /**
+   * Main launch
+   * @param args arguments
+   * @throws Exception if anything goes wrong
+   */
   public static void main(String[] args) throws Exception {
     GridBagTest1 app = new GridBagTest1();
     app.init();

@@ -1,8 +1,6 @@
 package org.hkmi2.aagbl;
 
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -10,21 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import javax.swing.JPanel;
-
+/**
+ * Utility class that handles a list of components and rectangles, and computes
+ * the {@link GridBagConstraints} for each component.
+ * This class is used by {@link AsciiArtGridBagLayout}, there are few reasons to use this class
+ * directly.
+ */
 public class GridBagLayoutBuilder
 {
-  /** set to true to see some debugging messages on System.out */
-  public static boolean debugBuilder = false; //
+  /** set to true to see some debugging messages on System.out . Default is false. */
+  public static boolean debugBuilder = false;
   
   List<CRect> rects;
   GridBagLayout gbl = new GridBagLayout();
-  JPanel pnl = new JPanel(gbl);
+  //JPanel pnl = new JPanel(aagbl);
   ArrayList<Component> components = new ArrayList<Component>();
   int maxx;
   int maxy;
   
-  
+  /**
+   * Constructor
+   * @param rects The list of component rectangles
+   */
   public GridBagLayoutBuilder(List<CRect> rects) {
     this.rects = rects;
     computeMaxxy();
@@ -41,10 +46,19 @@ public class GridBagLayoutBuilder
     //if (maxy > 0) maxy--;
   }
   
+  /**
+   * Return the current grid bag layout
+   * @return the current {@link GridBagLayout}
+   */
   public GridBagLayout getGridBagLayout() { return gbl; }
   
-  public JPanel getJPanel() { return pnl; }
+  //public JPanel getJPanel() { return pnl; }
   
+  /**
+   * Find a rectangle with the given name
+   * @param name The name of the rectangle to look for
+   * @return The rectangle or null if not found.
+   */
   public CRect findCRect(String name) {
     for (CRect r : rects) {
       if (name.equals(r.name)) return r;
@@ -52,24 +66,21 @@ public class GridBagLayoutBuilder
     return null;
   }
   
+  /**
+   * Add the component and associate it with the given name, and associate this name with the given constraints.
+   * @param name The name for the component
+   * @param comp The {@link Component}
+   */
   public void add(String name, Component comp) {
-    add(name, comp, null);
-  }
-  
-  public void add(String name, Component comp, GridBagConstraints extraConstraints) {
-    GridBagConstraints cons = makeGridBagConstraints(name);
-    if (extraConstraints != null) {
-      cons.anchor = extraConstraints.anchor;
-      cons.fill = extraConstraints.fill;
-      cons.insets = extraConstraints.insets;
-      cons.ipadx = extraConstraints.ipadx;
-      cons.ipady = extraConstraints.ipady;
-    }
-    //comp.setPreferredSize(new Dimension(0,0));
-    pnl.add(comp, cons);
+    //GridBagConstraints cons = makeGridBagConstraints(name);
     components.add(comp);
   }
   
+  /**
+   * Create a {@link GridBagConstraints} object for the rectangle of the given name.
+   * @param rectName The name of the rectangle.
+   * @return The created {@link GridBagConstraints}
+   */
   public GridBagConstraints makeGridBagConstraints(String rectName) {
     CRect r = findCRect(rectName);
     GridBagConstraints cons = new GridBagConstraints();
@@ -132,6 +143,11 @@ public class GridBagLayoutBuilder
     return cons;
   }
   
+  /**
+   * Split the string at the commas.
+   * @param str String to split
+   * @return an array of String
+   */
   public static String[] split(String str) {
     StringTokenizer stok = new StringTokenizer(str, ",");
     String[] r = new String[stok.countTokens()];
@@ -140,6 +156,11 @@ public class GridBagLayoutBuilder
     return r;
   }
     
+  /**
+   * Set the Weightx to the rectangles
+   * @param rectNameList List of rectangle names, separated by comma
+   * @param val The value of the Weightx
+   */
   public void setWeightx(String rectNameList, double val) {
     String[] names = split(rectNameList);
     for (String name : names) {
@@ -150,6 +171,11 @@ public class GridBagLayoutBuilder
     }
   }
   
+  /**
+   * Set the Weighty to the rectangles
+   * @param rectNameList List of rectangle names, separated by comma
+   * @param val The value of the Weighty
+   */
   public void setWeighty(String rectNameList, double val) {
     String[] names = split(rectNameList);
     for (String name : names) {
@@ -160,6 +186,11 @@ public class GridBagLayoutBuilder
     }
   }
   
+  /**
+   * Set the Ipadx of the rectangles
+   * @param rectNameList List of rectangle names, separated by comma
+   * @param val The value of the Ipadx
+   */
   public void setIpadx(String rectNameList, int val) {
     String[] names = split(rectNameList);
     for (String name : names) {
@@ -168,6 +199,11 @@ public class GridBagLayoutBuilder
     }
   }
   
+  /**
+   * Set the Ipady of the rectangles
+   * @param rectNameList List of rectangle names, separated by comma
+   * @param val The value of the Ipady
+   */
   public void setIpady(String rectNameList, int val) {
     String[] names = split(rectNameList);
     for (String name : names) {
@@ -176,6 +212,11 @@ public class GridBagLayoutBuilder
     }
   }
   
+  /**
+   * Set the Insets of the rectangles
+   * @param rectNameList List of rectangle names, separated by comma
+   * @param insets The {@link Insets} to set
+   */
   public void setInsets(String rectNameList, Insets insets) {
     String[] names = split(rectNameList);
     for (String name : names) {

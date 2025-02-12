@@ -5,17 +5,48 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Parse the ASCII art drawing of the layout.
+ * All '-' and '|' are for decoration. Internally they are converted to '+'.<br>
+ * The last char is decorative and is also checked to ensure this is actually an ASCII art layout spec,
+ * but it is not taken into account for the size calculations.
+ * Char coordinates in a rectangle start at 1 for the line and also at 1 for the column.
+ * This is to get the same numbers as in the text editor.
+ * <p>
+ * For example the specification drawing :
+ * <pre>
+ * +---+
+ * | A |
+ * +-+-+
+ * |B|C|
+ * +-+-+
+ * </pre>
+ * Declares 3 rectangles :
+ * 'A' that starts at column 1, line 1, has a width of 4 and a height of 2<br>
+ * 'B' that starts at column 1, line 3, has a width of 2 and a height of 2<br>
+ * 'C' that starts at column 3, line 3, has a width of 2 and a height of 2<br>
+ */
 public class LayoutParser
 {
+  /** Flag to indicate horizontal filling */
   public static final int FILL_HORIZ = 1;
+  /** Flag to indicate vertical filling */
   public static final int FILL_VERT = 2;
   
-  public static boolean debugParser = false; //set to true to emit messages on System.out while parsing
+  /** set to true to emit messages on System.out while parsing */
+  public static boolean debugParser = false;
   
   ArrayList<CRect> rects = new ArrayList<>();
   
+  /**
+   * Get the list of the rectangles
+   * @return The list of the rectangles
+   */
   public ArrayList<CRect> getCRects() { return rects; }
   
+  /**
+   * Constructor
+   */
   public LayoutParser() {
   }
 
@@ -82,14 +113,29 @@ public class LayoutParser
     return null;
   }
 
+  /**
+   * Is the char compatible with the start of a name
+   * @param c the char
+   * @return true if it is
+   */
   public boolean isNameStart(char c) {
     return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
   }
   
+  /**
+   * Is the char compatible with the char of a name
+   * @param c the char
+   * @return true if it is
+   */
   public boolean isNameChar(char c) {
     return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z') || ('0' <= c && c <= '9');
   }
   
+  /**
+   * Evaluate the flags
+   * @param spec The layout spec in the rectangle
+   * @return the flags (0, {@link #FILL_VERT}, {@link #FILL_HORIZ}, {@link #FILL_VERT}|{@link #FILL_HORIZ}) 
+   */
   public int evalFlags(String spec) {
     int flags = 0;
     for (char c : spec.toCharArray()) {
@@ -99,6 +145,11 @@ public class LayoutParser
     return flags;
   }
   
+  /**
+   * Remove flag chars from the spec line
+   * @param spec The spec line
+   * @return The spec line with the flag chars ('^','&lt;','&gt;') removed
+   */
   public String removeFlags(String spec) {
     StringBuilder sb = new StringBuilder();
     for (char c : spec.toCharArray()) {
@@ -108,6 +159,11 @@ public class LayoutParser
     return sb.toString();
   }
   
+  /**
+   * Is the name a valid name for a rectangle
+   * @param str The name
+   * @return true if it is
+   */
   public boolean isNameValid(String str) {
     if (str.length() < 1) return false;
     if (!isNameStart(str.charAt(0))) return false;
@@ -117,7 +173,7 @@ public class LayoutParser
   
   /**
    * Parse Ascii Art specification 
-   * @param la A line that was cleaned
+   * @param la A liste of cleaned lines to parse
    * @throws LayoutParseException If the line does not start/end with a '+' delimiter, if a line is less than 3 chars wide, if a rectangle width changes 
    */
   public void parseSpec(List<char[]> la) 
@@ -154,7 +210,7 @@ public class LayoutParser
           sb.setLength(0);
           int tmpFlags = evalFlags(val);
           val = removeFlags(val);
-          if (debugParser) System.out.println("Flags removed : '"+val+"'");
+          if (debugParser) if (val.trim().length() > 0) System.out.println("Val with flags removed : '"+val+"'");
           String name = val.trim();
           if (debugParser && name.length() > 0) System.out.println("Name : '"+name+"'");
           if (val.length() > 0) {

@@ -11,6 +11,10 @@ import javax.swing.JLabel;
 import org.hkmi2.aagbl.AsciiArtGridBagLayout;
 import org.hkmi2.aagbl.LayoutParseException;
 
+/**
+ * Simple demo, Hello World style.
+ * This class is a JFrame with an ASCII art layout.
+ */
 @SuppressWarnings("serial")
 public class HelloWorld 
   extends JFrame
@@ -27,12 +31,16 @@ public class HelloWorld
       "|              |              |              |\n"+
       "+--------------+--------------+--------------+\n";
   
-  AsciiArtGridBagLayout gbl;
+  AsciiArtGridBagLayout aagbl;
   JLabel L = new JLabel("Hello, world !");
   JButton B = new JButton("OK");
   JLabel S1 = new JLabel("  "); //spacing invisible label
   JLabel S2 = new JLabel("  "); //spacing invisible label
   
+  /**
+   * Constructor
+   * @throws LayoutParseException If there is an error in the layout
+   */
   public HelloWorld() 
       throws LayoutParseException 
   {
@@ -40,19 +48,18 @@ public class HelloWorld
     //say we want to exit on close
     setDefaultCloseOperation(EXIT_ON_CLOSE);
     //create our layout
-    gbl = new AsciiArtGridBagLayout(aa);
-    //associate the rectangles with our components
-    gbl.setConstraints("B", B);
-    gbl.setConstraints("L", L);
-    gbl.setConstraints("S1", S1);
-    gbl.setConstraints("S2", S2);
+    aagbl = new AsciiArtGridBagLayout(aa);
+    //associate the constraint rectangles with our components
+    aagbl.setConstraints("B", B);
+    aagbl.setConstraints("L", L);
+    aagbl.setConstraints("S1", S1);
+    aagbl.setConstraints("S2", S2);
+    //Alternative method to set constraints :
+    //aagbl.setConstraints(AsciiArtGridBagLayout.makeMap(new Object[] {"B",B,"L",L,"S1",S1,"S2",S2}));
     //now set this as our layout
-    setLayout(gbl);
-    //and add the components 
-    add(L);
-    add(B);
-    add(S1);
-    add(S2);
+    setLayout(aagbl);
+    //and add all the components
+    aagbl.addAllComponentsTo(getContentPane());
     //add a handler that will close the frame when OK button is pressed
     B.addActionListener(new ActionListener() {
       @Override
@@ -65,6 +72,11 @@ public class HelloWorld
     L.setFont(labelFont);
   }
   
+  /**
+   * Main application entry point
+   * @param args Not used
+   * @throws Exception If something goes wrong
+   */
   public static void main(String[] args) 
       throws Exception 
   {

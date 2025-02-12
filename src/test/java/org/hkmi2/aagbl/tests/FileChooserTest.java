@@ -13,6 +13,9 @@ import javax.swing.JTextArea;
 import org.hkmi2.aagbl.AsciiArtGridBagLayout;
 import org.hkmi2.aagbl.LayoutParseException;
 
+/**
+ * Test layouts with a file chooser interface
+ */
 public class FileChooserTest
 implements ActionListener
 {
@@ -25,9 +28,16 @@ implements ActionListener
   JButton ok = new JButton("OK");
   JButton cancel = new JButton("Cancel");
   
+  /**
+   * Constructor
+   */
   public FileChooserTest() {
   }
 
+  /**
+   * Initialize the object
+   * @throws LayoutParseException if there is an error in the spec
+   */
   public void init() throws LayoutParseException {
     String spec = 
         "+-----+-----------------+\n"+
@@ -57,6 +67,9 @@ implements ActionListener
     cancel.addActionListener(this);
   }
   
+  /**
+   * Run the app
+   */
   public void run() {
     JFrame jfrm = new JFrame("testGridBag1()");
     jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,12 +80,20 @@ implements ActionListener
     jfrm.setVisible(true);    
   }
   
+  /**
+   * Main method entry point
+   * @param args Not used
+   * @throws Exception If something goes wrong
+   */
   public static void main(String[] args) throws Exception {
     FileChooserTest app = new FileChooserTest();
     app.init();
     app.run();
   }
 
+  /**
+   * GUI Action handler
+   */
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == ok) {

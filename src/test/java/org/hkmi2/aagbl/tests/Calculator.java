@@ -18,7 +18,8 @@ import org.hkmi2.aagbl.AsciiArtGridBagLayout;
 import org.hkmi2.aagbl.LayoutParseException;
 
 /**
- * A simple calculator demo to demonstrate layout capabilities
+ * A simple calculator demo to demonstrate layout capabilities.
+ * Needs a Javascript engine to work (usually openjdk don't ship with one)
  * @author Harry
  *
  */
@@ -59,6 +60,12 @@ extends JFrame
   
   ScriptEngine engine;
   
+  /**
+   * Constructor
+   * @param title the title
+   * @throws HeadlessException If swing is not available
+   * @throws LayoutParseException If there is an error in the layout spec
+   */
   public Calculator(String title) 
       throws HeadlessException, LayoutParseException 
   {
@@ -108,7 +115,9 @@ extends JFrame
             @Override
             public void actionPerformed(ActionEvent e) {
               try {
-                Object r = engine.eval(D.getText());
+                  Object r;
+                  if (engine != null) r = engine.eval(D.getText());
+                  else r = "******";
                 D.setText(String.valueOf(r));
               }
               catch (ScriptException e1) {
@@ -125,11 +134,22 @@ extends JFrame
           getContentPane().setLayout(gbl);
           gbl.addAllComponentsTo(getContentPane());
           //yes we use the javascript engine just for this ...
-          engine = new ScriptEngineManager().getEngineByName("JavaScript");
+          ScriptEngineManager sem = new ScriptEngineManager(); 
+          engine = sem.getEngineByName("JavaScript");
+          if (engine == null) {
+              //try by extension
+              engine = sem.getEngineByExtension("js");
+              if (engine == null) System.err.println("No JavaScript engine found !");
+          }
           //adjust alignment for a more realistic calculator display
           D.setHorizontalAlignment(JTextField.RIGHT);
   }
 
+  /**
+   * The main entry point
+   * @param args Arguments (not used here)
+   * @throws Exception If something goes wrong
+   */
   public static void main(String[] args) throws Exception {
     Calculator frm = new Calculator("Calculator demo");
     frm.pack();

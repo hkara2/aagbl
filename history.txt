@@ -1,0 +1,5 @@
+2022-05-10  v0      Creation
+2022-11-27  v1.0    Version published to Git
+2026-05-07  v1.1    Added comments and tidyed javadoc
+                    Added org.hkmi2.aagbl.AsciiArtGridBagLayout.getAllCRectNames()
+                    Updated build.gradle and gradlew , now you can just write gradlew build distZip

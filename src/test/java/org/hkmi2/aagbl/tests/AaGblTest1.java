@@ -11,6 +11,9 @@ import javax.swing.JTextArea;
 import org.hkmi2.aagbl.AsciiArtGridBagLayout;
 import org.hkmi2.aagbl.LayoutParseException;
 
+/**
+ * Test the basic layout capabilities
+ */
 public class AaGblTest1 extends JFrame
 {
   /**
@@ -40,19 +43,32 @@ public class AaGblTest1 extends JFrame
   AsciiArtGridBagLayout ly;
   
   /**
+<<<<<<< HEAD
    * 
    * @throws HeadlessException _
    * @throws LayoutParseException _
+=======
+   * Constructor
+   * @throws HeadlessException If swing not available
+   * @throws LayoutParseException If layout specification is invalid
+>>>>>>> f7fab14f90853a4afbe33e3a5c24c2955096ae1b
    */
   public AaGblTest1() throws HeadlessException, LayoutParseException {
     this(" ");
   }
 
   /**
+<<<<<<< HEAD
    * 
    * @param title _
    * @throws HeadlessException _
    * @throws LayoutParseException _
+=======
+   * Constructor
+   * @param title The title of the window
+   * @throws HeadlessException If swing not available
+   * @throws LayoutParseException If layout specification is invalid
+>>>>>>> f7fab14f90853a4afbe33e3a5c24c2955096ae1b
    */
   public AaGblTest1(String title) throws HeadlessException, LayoutParseException {
     super(title);

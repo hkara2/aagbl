@@ -1,4 +1,11 @@
-package org.hkmi2.aagbl
+/**
+ * "Hello world" of AsciiArtGridBagLayout, in groovy script style 
+ * Execution example (adapt to your env.) :
+ * C:\hkgh\aagbl\src\test\groovy>set CLASSPATH=C:\hkgh\aagbl\build\libs\aagbl-1.1.jar
+ * C:\hkgh\aagbl\src\test\groovy>c:\app\groovy\groovy-4.0.8\bin\groovy org/hkmi2/aagbl/tests/Hello.groovy
+ * (here Groovy SDK version 4.0.8 was unzipped to c:\app\groovy )
+ */
+package org.hkmi2.aagbl.tests
 
 import javax.swing.*
 import java.awt.*
@@ -29,12 +36,11 @@ frm = swb.frame(
             text: 'Hello to all the layouters', 
             horizontalAlignment: JTextField.CENTER
         )
-	b = button(text: "OK", actionPerformed: {e-> System.exit(0)} )
+	b = button(text: "OK", actionPerformed: {e-> frm.setVisible(false); frm.dispose()} )
 }
 
-'a,b'.split(',').each {
-	gbl.setConstraints(it, binding[it])
-}
+//in v1.0 you had to write : 'a,b'.split(',').each {
+gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
 
 frm.contentPane.setLayout(gbl)
 gbl.addAllComponentsTo(frm.contentPane)

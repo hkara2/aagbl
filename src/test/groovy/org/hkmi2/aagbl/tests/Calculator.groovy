@@ -1,9 +1,10 @@
 /**
  * Calculator as a groovy script example. Execution example (adapt to your env.) :
- * C:\hk\jb\aagbl\src\test\java>set CLASSPATH=C:\hk\jb\aagbl\build\libs\aagbl-1.0.jar
- * C:\hk\jb\aagbl\src\test\java>c:\groovy-4.0.6\bin\groovy org/hkmi2/aagbl/tests/Calculator.groovy
+ * C:\hkgh\aagbl\src\test\groovy>set CLASSPATH=C:\hkgh\aagbl\build\libs\aagbl-1.1.jar
+ * C:\hkgh\aagbl\src\test\groovy>c:\app\groovy\groovy-4.0.8\bin\groovy org/hkmi2/aagbl/tests/Calculator.groovy
+ * (here Groovy SDK version 4.0.8 was unzipped to c:\app\groovy )
  */
-package org.hkmi2.aagbl
+package org.hkmi2.aagbl.tests
 
 import javax.swing.*
 import java.awt.*
@@ -71,9 +72,8 @@ frm = swb.frame(title: "Calculator", defaultCloseOperation: JFrame.EXIT_ON_CLOSE
 	L2 = label(text: " ")
 }
 
-'D,B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,BD,BS,BP,BM,BZ,BC,BE,L1,L2'.split(',').each {
-	gbl.setConstraints(it, binding[it])
-}
+//In v1.0 you had to write : 'D,B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,BD,BS,BP,BM,BZ,BC,BE,L1,L2'.split(',').each {
+gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
 
 frm.contentPane.setLayout(gbl)
 gbl.addAllComponentsTo(frm.contentPane)

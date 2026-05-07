@@ -154,6 +154,13 @@ names with commas. Ex :
 
 The constraints that can be set this way are `weightx`, `weighty`, `ipadx`, `ipady`.
 
+If you use this library within a Groovy shell, things are even simpler, if you set all
+your components in the binding (i.e. without declaring them with _def_ or a type).
+
+Then you only have to use a generic call to set all the component constraints :
+
+    gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
+
 
 ### 4.4. Using groovy shell
 
@@ -161,11 +168,16 @@ Hand-crafted layouts are are good for small components and small scripts.
 The [groovy shell](https://groovy-lang.org/groovysh.html) is excellent as a scripting language.
 Thanks to the `SwingBuilder` object, Swing GUIs are easy to build.
 Groovy's capabilites make the use of `AsciiArtGridBagLayout` even more compact.
-You can have a look at the Calculator demo written as a groovy script to see for yourself :
 
-    /src/test/java/org/hkmi2/aagbl/tests/Calculator.groovy
+See a "Hello world" example here :
+
+    /src/test/groovy/org/hkmi2/aagbl/tests/Hello.groovy
+
+You can also have a look at the Calculator demo written as a groovy script to see for yourself :
+
+    /src/test/groovy/org/hkmi2/aagbl/tests/Calculator.groovy
 
 For step-by-step instructions on using Groovy with aagbl, have
 a look at [starting-with-aagbl](doc/starting-with-aagbl.md).
 
-(2024)
+(2026)

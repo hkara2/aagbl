@@ -118,7 +118,7 @@ public class LayoutParser
   /**
    * Process the flags : if '^' is encountered, add FILL_VERT, if '&lt;' or '&gt;' is encountered, add FILL_HORIZ.
    * @param spec The spec to process
-   * @return the evaluated flags
+   * @return the evaluated flags  (0, {@link #FILL_VERT}, {@link #FILL_HORIZ}, {@link #FILL_VERT}|{@link #FILL_HORIZ})
    */
   public int evalFlags(String spec) {
     int flags = 0;
@@ -130,8 +130,8 @@ public class LayoutParser
   }
   
   /**
-   * Remove the flags from the spec.
-   * @param spec The spec to process
+   * Remove the flags from the spec line.
+   * @param spec The spec line to process
    * @return The spec with the flags '^', '&lt;', '&gt;' replaced with ' '
    */
   public String removeFlags(String spec) {
@@ -144,7 +144,7 @@ public class LayoutParser
   }
   
   /**
-   * Is the name a valid name
+   * Is the name a valid name for a rectangle
    * @param str String to test
    * @return true if str is a valid name
    */
@@ -157,7 +157,7 @@ public class LayoutParser
   
   /**
    * Parse Ascii Art specification 
-   * @param la A line that was cleaned
+   * @param la A list of cleaned lines to parse
    * @throws LayoutParseException If the line does not start/end with a '+' delimiter, if a line is less than 3 chars wide, if a rectangle width changes 
    */
   public void parseSpec(List<char[]> la) 
@@ -194,7 +194,7 @@ public class LayoutParser
           sb.setLength(0);
           int tmpFlags = evalFlags(val);
           val = removeFlags(val);
-          if (debugParser) System.out.println("Flags removed : '"+val+"'");
+          if (debugParser) if (val.trim().length() > 0) System.out.println("Flags removed : '"+val+"'");
           String name = val.trim();
           if (debugParser && name.length() > 0) System.out.println("Name : '"+name+"'");
           if (val.length() > 0) {

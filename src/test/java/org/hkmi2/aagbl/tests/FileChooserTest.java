@@ -13,6 +13,9 @@ import javax.swing.JTextArea;
 import org.hkmi2.aagbl.AsciiArtGridBagLayout;
 import org.hkmi2.aagbl.LayoutParseException;
 
+/**
+ * Test layouts with a file chooser interface
+ */
 public class FileChooserTest
 implements ActionListener
 {
@@ -32,7 +35,7 @@ implements ActionListener
   }
 
   /**
-   * 
+   * Initialize the object
    * @throws LayoutParseException If layout is invalid
    */
   public void init() throws LayoutParseException {
@@ -78,7 +81,7 @@ implements ActionListener
   }
   
   /**
-   * 
+   * Main method entry point
    * @param args Ignored
    * @throws Exception If an error occurs
    */
@@ -90,6 +93,7 @@ implements ActionListener
 
   /**
    * Method that is called for the action
+   * GUI Action handler
    */
   @Override
   public void actionPerformed(ActionEvent e) {

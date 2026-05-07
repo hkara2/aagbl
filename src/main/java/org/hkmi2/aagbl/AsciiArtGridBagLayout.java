@@ -2,15 +2,12 @@ package org.hkmi2.aagbl;
 
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -59,9 +56,9 @@ extends GridBagLayout
   }
   
   /**
-   * Constructor with a drawing
-   * @param asciiArt The Ascii art drawing to use
-   * @throws LayoutParseException If something goes wrong during layout
+   * Main constructor, with the layout specification as an ASCII art drawing.
+   * @param asciiArt The layout (see docs for the format)
+   * @throws LayoutParseException If layout drawing is incorrect
    */
   public AsciiArtGridBagLayout(String asciiArt) 
   throws LayoutParseException
@@ -70,23 +67,23 @@ extends GridBagLayout
   }
 
   /**
-   * Default no argument constructor
+   * Simple no-args constructor
    */
   public AsciiArtGridBagLayout() {
   }
   
   /**
-   * Get the drawing
-   * @return The string that contains the Ascii art
+   * Return the current ASCII art drawing
+   * @return the current ASCII art drawing
    */
   public String getAsciiArt() {
     return asciiArt;
   }
 
   /**
-   * Set the drawing
-   * @param asciiArt The Ascii art drawing to use
-   * @throws LayoutParseException If something goes wrong while parsing asciiArt
+   * Set the ASCII art drawing, and compute the layout
+   * @param asciiArt the ASCII art drawing
+   * @throws LayoutParseException if layout drawing is incorrect
    */
   public void setAsciiArt(String asciiArt) 
   throws LayoutParseException
@@ -98,15 +95,16 @@ extends GridBagLayout
     gblb = new GridBagLayoutBuilder(parser.getCRects());
     crects = parser.getCRects();
     //S ystem.out.println("Rects :");
-    for (CRect r : crects) {
+    for (@SuppressWarnings("unused") CRect r : crects) {
       //S ystem.out.println("Rect"+r);
     }
   }
 
   /**
-   * Establish the GridBagConstraints for the given named component and set them for the component
-   * @param componentName The name that is used in the layout to adress the component
-   * @param comp The component that will get its constraints applied to
+   * Set the constraints for the given component. Used also to "declare" the components
+   * that will be affected by the layout constraints.
+   * @param componentName The name the component has in the layout
+   * @param comp The actual component that will get drawn 
    */
   public void setConstraints(String componentName, Component comp) {
     GridBagConstraints cons = gblb.makeGridBagConstraints(componentName);
@@ -117,8 +115,8 @@ extends GridBagLayout
   }
   
   /**
-   * Set the constraints for all the components of the map.
-   * @param cm The component by name map
+   * Set the constraints for all the components of the map
+   * @param cm The component by name map, each name must be the name used in the layout drawing.
    */
   public void setConstraints(Map<String, Component> cm) {
     for (String name : cm.keySet()) {
@@ -127,34 +125,43 @@ extends GridBagLayout
   }
   
   /**
-   * Get the MaxX
-   * @return the MaxX
+   * Get Max X which is the maximum char number used in the drawing, without the final column.
+   * Ex :
+   * <pre>
+   * +-+-+
+   * |A|B|
+   * +-+-+
+   * | Z |
+   * +---+
+   * </pre>
+   * Here MaxX will be 4.
+   * @return The maximum X
    */
   public int getMaxX() { return gblb.maxx; }
   
   /**
-   * Get the MaxY
-   * @return the MaxY
+   * Get Max Y which is the maximum line number used in the drawing, without the final line.
+   * @return The maximum Y
    */
   public int getMaxY() { return gblb.maxy; }
   
   /**
-   * Get the component for the name
-   * @param name The name
-   * @return the component for the name
+   * Get the component that has the given name
+   * @param name The name that was used when {@link #setConstraints(String, Component)} was called.
+   * @return The component or null if there is no component with that name
    */
   public Component getComponent(String name) { return componentsByName.get(name); }
 
   /**
-   * get the constraints for the name
-   * @param name The name
-   * @return The constraints
+   * Get the {@link GridBagConstraints} for the given name
+   * @param name The name that was used when {@link #setConstraints(String, Component)} was called.
+   * @return The {@link GridBagConstraints} object or null if there is no rectangle with that name
    */
   public GridBagConstraints getConstraints(String name) { return constraintsByName.get(name); }
   
   /**
-   * Get all the components
-   * @return A list of all the components
+   * Get all the components that were declared.
+   * @return A list with all the components
    */
   public List<Component> getAllComponents() { return new ArrayList<>(componentsByName.values()); }
   
@@ -171,9 +178,11 @@ extends GridBagLayout
   public List<String> getAllConstraintNames() { return new ArrayList<>(constraintsByName.keySet()); }
   
   /**
-   * Add all components the the container, from the list of components.
+   * Add all our components to the given {@link Container} object.
+   * For each component, {@link Container#add(Component, Object)} is called, with the corresponding constraints object.
+   * Adds all components the the container, from the list of components.
    * Useful if you already have a list of component names.
-   * @param cr the container to add to
+   * @param cr The container that will get all our objects
    */
   public void addAllComponentsTo(Container cr) {
     for (String k : componentsByName.keySet()) {
@@ -183,8 +192,10 @@ extends GridBagLayout
   
   /**
    * Set the x weight for all the components in the list (comma-separated list, no whitespace) 
-   * @param rectNameList the list, example "a,x,y"
-   * @param val the x weight to set to
+   * Sets the x-weight for all the components in the list, and re-applies all the constraints for the
+   * components in the list
+   * @param rectNameList A comma-separated list of names, example "a,x,y"
+   * @param val The new weight
    */
   public void setWeightx(String rectNameList, double val) {
     gblb.setWeightx(rectNameList, val); 
@@ -192,7 +203,9 @@ extends GridBagLayout
   }
   
   /**
-   * Set the y weight for all the components in the list (comma-separated list, no whitespace) 
+   * Sets the y-weight for all the components in the list (comma-separated list, no whitespace), 
+   * and re-applies all the constraints for the
+   * components in the list
    * @param rectNameList the list, example "a,x,y"
    * @param val the y weight to set to
    */
@@ -203,6 +216,7 @@ extends GridBagLayout
   
   /**
    * Reset the constraints to what we have in this layout, to all the elements that are in the list  (comma-separated list, no whitespace)
+   * Internal method to reset the components to their new constraints
    * @param rectNameList the list, example "a,x,y"
    */
   private void resetConstraints(String rectNameList) {
@@ -214,7 +228,9 @@ extends GridBagLayout
   }
   
   /**
-   * Set the x ipadding for all the components in the list (comma-separated list, no whitespace) 
+   * Set the x ipadding for all the components in the list (comma-separated list, no whitespace)
+   * and re-applies all the constraints for the
+   * components in the list 
    * @param rectNameList the list, example "a,x,y"
    * @param val the x ipadding to set to
    */
@@ -224,7 +240,9 @@ extends GridBagLayout
   }
   
   /**
-   * Set the y ipadding for all the components in the list (comma-separated list, no whitespace) 
+   * Set the y ipadding for all the components in the list (comma-separated list, no whitespace)
+   * and re-applies all the constraints for the
+   * components in the list 
    * @param rectNameList the list, example "a,x,y"
    * @param val the y ipadding to set to
    */
@@ -234,7 +252,7 @@ extends GridBagLayout
   }
   
   /**
-   * Return a list of all the CRects
+   * Return a list of all the declared CRects
    * @return A list of all the CRects
    */
   public List<CRect> getCRects() { return crects; }

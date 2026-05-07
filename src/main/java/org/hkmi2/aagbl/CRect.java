@@ -2,7 +2,7 @@ package org.hkmi2.aagbl;
 
 import java.awt.Insets;
 
-/** component rectangle */
+/** component rectangle  */
 public class CRect {
   /** Default constructor with no arguments */
   public CRect() {}

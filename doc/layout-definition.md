@@ -10,7 +10,7 @@ In each rectangle, you can put a name (a letter, followed by letters or numbers)
 If certain flags are encountered, a mode is set :
 
 - ^ : fill vertically
-- < or > : fill horizontally
+- &lt; or &gt; : fill horizontally
 
 If the name touches a boundary, the anchor will be set accordingly (N, NE, E, SE, S, SW, W, NW).
 
@@ -28,7 +28,7 @@ Example :
 This would translate to a grid of 
 
 4 lines x 26 columns.
-The leftmost and rightmost lines don't count as a separator.
+The rightmost column doesn't count as a separator.
 
 
 Inside this grid, you have 3 boxes :
@@ -48,7 +48,6 @@ A cell must always be rectangular, but can be made from joined cells, just like 
 Examples of accepted layout :
 
 
-~~~~ ascii
     +-----+-----+-----+-------+
     |     |     |     |       |
     |  A  |  D  |  E  |   G   |
@@ -74,7 +73,6 @@ Examples of accepted layout :
     |                         |
     |            L            |
     +-------------------------+
-~~~~
 
 Examples of forbidden layout (non-rectangular zones, nested
 rectangles) :
@@ -112,7 +110,7 @@ So the spec listed above is equivalent to :
     +                          +
     ++++++++++++++++++++++++++++
 
-If any chars '<' or '>' are found, the component will fill horizontally.
+If any chars '&lt;' or '&gt;' are found, the component will fill horizontally.
 
 If any char '^' is found, the component will fill vertically.
 
@@ -120,7 +118,14 @@ Each width and height will be used directly in the `GridBagConstraint` objects,
 so that the relative widths and heights in the drawing will be preserved in
 the layout.
 
+The additional parameters of the GridBagLayout can be set programmatically once the
+drawing has been parsed and each rectangle has its name :
 
+- weightx (use a value between 0 and 1.0, and make sure that the total sum of the weights is 1.0)
+- weighty (use a value between 0 and 1.0, and make sure that the total sum of the weights is 1.0)
+- insets
+- ipadx
+- ipady
 
 
 

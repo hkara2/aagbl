@@ -1,8 +1,6 @@
 package org.hkmi2.aagbl;
 
 import java.awt.Component;
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -15,24 +13,28 @@ import javax.swing.JPanel;
 /**
  * This object builds a series of GridBagLayouts from a list of rectangles (that were defined in
  * a Ascii art drawing, and parsed using a LayoutParser)
+ * Utility class that handles a list of components and rectangles, and computes
+ * the {@link GridBagConstraints} for each component.
+ * This class is used by {@link AsciiArtGridBagLayout}, there are few reasons to use this class
+ * directly.
  * @author hkaradimas
  *
  */
 public class GridBagLayoutBuilder
 {
-  /** set to true to see some debugging messages on System.out */
-  public static boolean debugBuilder = false; //
+  /** set to true to see some debugging messages on System.out . Default is false. */
+  public static boolean debugBuilder = false;
   
   List<CRect> rects;
   GridBagLayout gbl = new GridBagLayout();
-  JPanel pnl = new JPanel(gbl);
+  JPanel pnl = new JPanel();
   ArrayList<Component> components = new ArrayList<Component>();
   int maxx;
   int maxy;
   
   /**
    * Default constructor
-   * @param rects A list of CRect
+   * @param rects A list of CRect (The list of component rectangles)
    */
   public GridBagLayoutBuilder(List<CRect> rects) {
     this.rects = rects;
@@ -61,11 +63,11 @@ public class GridBagLayoutBuilder
    * @return The contained JPanel
    */
   public JPanel getJPanel() { return pnl; }
-  
+    
   /**
-   * Find a CRect that has the given names
-   * @param name The name of the CRect to find
-   * @return The CRect that was found, or null if none found
+   * Find a rectangle with the given name
+   * @param name The name of the rectangle to look for
+   * @return The rectangle or null if not found.
    */
   public CRect findCRect(String name) {
     for (CRect r : rects) {
@@ -105,6 +107,7 @@ public class GridBagLayoutBuilder
   
   /**
    * Calculate the GridBagConstraints for the CRect that has the given name
+   * Create a {@link GridBagConstraints} object for the rectangle of the given name.
    * @param rectName The name of the CRect
    * @return the calculated GridBagConstraints
    */

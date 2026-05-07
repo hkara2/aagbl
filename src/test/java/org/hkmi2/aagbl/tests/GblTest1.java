@@ -30,8 +30,8 @@ public class GblTest1 extends JFrame
   
   /**
    * 
-   * @param title _
-   * @throws HeadlessException _
+   * @param title the title
+   * @throws HeadlessException if GUI not available
    */
   public GblTest1(String title) throws HeadlessException {
     super(title);
@@ -66,7 +66,7 @@ public class GblTest1 extends JFrame
   }
   
   /**
-   * 
+   * Main method entry point
    * @param args unused
    */
   public static void main(String[] args) {

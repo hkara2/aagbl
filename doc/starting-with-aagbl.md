@@ -68,7 +68,7 @@ frm = swb.frame(
             text: 'Hello to all the layouters', 
             horizontalAlignment: JTextField.CENTER
         )
-	b = button(text: "OK", actionPerformed: {e-> System.exit(0)} )
+	b = button(text: "OK", actionPerformed: {e-> frm.setVisible(false); frm.dispose()} )
 }
 ~~~~
 
@@ -83,13 +83,11 @@ component is created. This is why I like to put each argument on a separate line
 - Notice how you can put the code for <code>actionPerformed</code> directly in the code that creates the button.
 
 Now, using groovy's *binding* context, we have access to all the variables of
-the binding. We can build a small command to set the constraints to all the
+the binding. We can use this small code line to set the constraints to all the
 widgets we have declared in the swing builder :
 
 ~~~~ groovy
-'a,b'.split(',').each {
-	gbl.setConstraints(it, binding[it])
-}
+gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
 ~~~~
 
 The rest of the code is fairly standard code to tell the frame to use our
@@ -110,29 +108,29 @@ in the following directory :
 
 
 ~~~~ dos
-c:\groovy-4.0.6
+C:\app\groovy\groovy-4.0.8
 ~~~~
 
-I have downloaded <code>aagbl-1.0.jar</code> in <code>c:\temp</code>.
+I have downloaded <code>aagbl-1.1.jar</code> in <code>c:\temp</code>.
 I have downloaded the source code of aagbl in <code>c:\temp</code>, and unzipped it in
-<code>c:\temp\aagbl-1.0</code>.
+<code>c:\temp\aagbl-1.1</code>.
 
 Now let's open a command line window (cmd) and go to the base of groovy test files in the source directory :
 
 ~~~~ dos
-cd C:\temp\aagbl-1.0\src\test\groovy
+cd C:\temp\aagbl-1.1\src\test\groovy
 ~~~~
 
 Set the CLASSPATH variable so Groovy will find the aagbl library :
 
 ~~~~ dos
-set CLASSPATH=c:\temp\aagbl-1.0.jar
+set CLASSPATH=c:\temp\aagbl-1.1.jar
 ~~~~
 
 And now let's launch Groovy to run our Hello script (which is already in the distribution) :
 
 ~~~~ dos
-c:\groovy-4.0.6\bin\groovy org/hkmi2/aagbl/tests/Hello
+C:\app\groovy\groovy-4.0.8\bin\groovy org/hkmi2/aagbl/tests/Hello
 ~~~~
 
 You should have a small window like this :
@@ -145,7 +143,7 @@ Click the OK button, that should close the window.
 While we're at it, we can launch the calculator test :
 
 ~~~~ dos
-c:\groovy-4.0.6\bin\groovy org/hkmi2/aagbl/tests/Calculator
+C:\app\groovy\groovy-4.0.8\bin\groovy org/hkmi2/aagbl/tests/Calculator
 ~~~~
 
 This should display the calculator.

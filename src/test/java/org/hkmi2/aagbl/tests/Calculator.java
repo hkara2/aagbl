@@ -59,6 +59,12 @@ extends JFrame
   
   ScriptEngine engine;
   
+  /**
+   * 
+   * @param title Title of calculator
+   * @throws HeadlessException If run on a headless device
+   * @throws LayoutParseException If layout has invalid syntax
+   */
   public Calculator(String title) 
       throws HeadlessException, LayoutParseException 
   {
@@ -130,6 +136,11 @@ extends JFrame
           D.setHorizontalAlignment(JTextField.RIGHT);
   }
 
+  /**
+   * 
+   * @param args Args to use (ignored, not used)
+   * @throws Exception If an error occurs
+   */
   public static void main(String[] args) throws Exception {
     Calculator frm = new Calculator("Calculator demo");
     frm.pack();

@@ -28,10 +28,18 @@ public class GblTest1 extends JFrame
   JTextField c = new JTextField("Hello world");
   JButton d = new JButton("Press me");
   
+  /**
+   * 
+   * @param title _
+   * @throws HeadlessException _
+   */
   public GblTest1(String title) throws HeadlessException {
     super(title);
   }
 
+  /**
+   * run entry point
+   */
   public void run() {
     JPanel mainPanel = new JPanel();
     
@@ -57,6 +65,10 @@ public class GblTest1 extends JFrame
     setVisible(true);    
   }
   
+  /**
+   * 
+   * @param args unused
+   */
   public static void main(String[] args) {
     GblTest1 frm = new GblTest1("GridBagLayout Test 1");
     frm.run();

@@ -1,21 +1,35 @@
 package org.hkmi2.aagbl;
 
-import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 /** component rectangle */
 public class CRect {
-  String name;
-  int x, y; //coordinates x and y 
-  int w, h;
-  int flags;
-  int lineOfName;
-  int halign; //1 left 2 centered 3 right
-  int valign; //1 top  2 centered 3 bottom
-  double weightx = -1; //if >= 0 will be used to force weightx
-  double weighty = -1; //if >= 0 will be used to force weighty
-  int ipadx = 0;
-  int ipady = 0;
-  Insets insets = new Insets(0, 0, 0, 0);
+  /** Default constructor with no arguments */
+  public CRect() {}
+  /** name of CRect (can be null if no name given) */
+  public String name;
+  /** x and y coordinates */
+  public int x, y; //coordinates x and y
+  /** width ant height */
+  public int w, h;
+  /** flags */
+  public int flags;
+  /** line that contains the name */
+  public int lineOfName;
+  /** horizontal alignment : 1 left 2 centered 3 right */
+  public int halign;
+  /** vertical alignment : 1 top  2 centered 3 bottom*/
+  public int valign;
+  /** weight of x : if >= 0 will be used to force weightx */
+  public double weightx = -1;
+  /** weight of y : if >= 0 will be used to force weighty */
+  public double weighty = -1; 
+  /** ipad of x (0 by default) */
+  public int ipadx = 0;
+  /** ipad of y (0 by default) */
+  public int ipady = 0;
+  /** the insets, default : Insets(0, 0, 0, 0) */
+  public Insets insets = new Insets(0, 0, 0, 0);
+  /** convert this CRect to String */
   public String toString() { return "['"+name+"',"+x+","+y+","+w+","+h+"]"; }
 }

@@ -8,9 +8,18 @@ import org.hkmi2.aagbl.LayoutParseException;
 import org.hkmi2.aagbl.LayoutParser;
 import org.junit.jupiter.api.Test;
 
-class LayoutTests
+/**
+ * More tests for the layouts
+ * @author hkaradimas
+ *
+ */
+public class LayoutTests
 {
 
+  /**
+   * Test that names can be left aligned, right aligned, or centered.
+   * @throws LayoutParseException _
+   */
   @Test
   void testParseSpec1() throws LayoutParseException {
 
@@ -31,6 +40,10 @@ class LayoutTests
     }
   }
 
+  /**
+   * Test that rectangles can be of different sizes
+   * @throws LayoutParseException _
+   */
   @Test
   void testParseSpec2() throws LayoutParseException {
 
@@ -53,6 +66,10 @@ class LayoutTests
     }
   }
 
+  /**
+   * Test that a rectangle name can be on first line of rectangle
+   * @throws LayoutParseException _
+   */
   @Test
   void testParseSpec3() throws LayoutParseException {
 
@@ -74,6 +91,10 @@ class LayoutTests
     }
   }
 
+  /**
+   * Test that flags work
+   * @throws LayoutParseException _
+   */
   @Test
   void testParseSpec4() throws LayoutParseException {
 

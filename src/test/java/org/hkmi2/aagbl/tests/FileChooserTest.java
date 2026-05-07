@@ -25,9 +25,16 @@ implements ActionListener
   JButton ok = new JButton("OK");
   JButton cancel = new JButton("Cancel");
   
+  /**
+   * Default constructor
+   */
   public FileChooserTest() {
   }
 
+  /**
+   * 
+   * @throws LayoutParseException If layout is invalid
+   */
   public void init() throws LayoutParseException {
     String spec = 
         "+-----+-----------------+\n"+
@@ -57,6 +64,9 @@ implements ActionListener
     cancel.addActionListener(this);
   }
   
+  /**
+   * Run this mini test
+   */
   public void run() {
     JFrame jfrm = new JFrame("testGridBag1()");
     jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,12 +77,20 @@ implements ActionListener
     jfrm.setVisible(true);    
   }
   
+  /**
+   * 
+   * @param args Ignored
+   * @throws Exception If an error occurs
+   */
   public static void main(String[] args) throws Exception {
     FileChooserTest app = new FileChooserTest();
     app.init();
     app.run();
   }
 
+  /**
+   * Method that is called for the action
+   */
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == ok) {

@@ -156,15 +156,30 @@ extends JFrame
   AsciiArtGridBagLayout lne = new AsciiArtGridBagLayout(sNE);
   AsciiArtGridBagLayout lc = new AsciiArtGridBagLayout(sC);
 
+  /**
+   * 
+   * @return _
+   */
   public JTextArea makeLorem() {
     JTextArea ta = new JTextArea("Lorem ipsum.");
     ta.setBorder(BorderFactory.createLineBorder(getForeground()));
     return ta;
   }
   
+  /**
+   * 
+   * @throws HeadlessException _
+   * @throws LayoutParseException _
+   */
   public AnchorTests() throws HeadlessException, LayoutParseException {
   }
 
+  /**
+   * 
+   * @param title _
+   * @throws HeadlessException _
+   * @throws LayoutParseException _
+   */
   public AnchorTests(String title) throws HeadlessException, LayoutParseException {
     super(title);
     JPanel mainPanel = new JPanel();
@@ -252,6 +267,12 @@ extends JFrame
     setContentPane(mainPanel);
   }
 
+  /**
+   * 
+   * @param args _
+   * @throws HeadlessException _
+   * @throws LayoutParseException _
+   */
   public static void main(String[] args) throws HeadlessException, LayoutParseException {
     AnchorTests frm = new AnchorTests("Anchor Tests");
     frm.setSize(800, 600);

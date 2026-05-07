@@ -15,6 +15,11 @@ import org.hkmi2.aagbl.GridBagLayoutBuilder;
 import org.hkmi2.aagbl.LayoutParseException;
 import org.hkmi2.aagbl.LayoutParser;
 
+/**
+ * Test GridBag computation
+ * @author hkaradimas
+ *
+ */
 public class GridBagTest1
 implements ActionListener
 {
@@ -24,9 +29,16 @@ implements ActionListener
   JButton cC = new JButton("C");
   JTextField cD = new JTextField("D");
   
+  /**
+   * Default constructor
+   */
   public GridBagTest1() {
   }
 
+  /**
+   * 
+   * @throws LayoutParseException _
+   */
   public void init() throws LayoutParseException {
     String spec = 
         "+-----+-----------------+\n"+
@@ -52,6 +64,9 @@ implements ActionListener
     cC.addActionListener(this);
   }
   
+  /**
+   * Run the test
+   */
   public void run() {
     JFrame jfrm = new JFrame("testGridBag1()");
     jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,12 +75,20 @@ implements ActionListener
     jfrm.setVisible(true);    
   }
   
+  /**
+   * 
+   * @param args unused
+   * @throws Exception If an error occurs
+   */
   public static void main(String[] args) throws Exception {
     GridBagTest1 app = new GridBagTest1();
     app.init();
     app.run();
   }
 
+  /**
+   * The action implemented for action listener
+   */
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == cC) {

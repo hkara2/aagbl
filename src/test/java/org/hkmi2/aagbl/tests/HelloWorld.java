@@ -11,6 +11,11 @@ import javax.swing.JLabel;
 import org.hkmi2.aagbl.AsciiArtGridBagLayout;
 import org.hkmi2.aagbl.LayoutParseException;
 
+/**
+ * The "Hello world !" of Ascii art GridBagLayout
+ * @author hkaradimas
+ *
+ */
 @SuppressWarnings("serial")
 public class HelloWorld 
   extends JFrame
@@ -33,6 +38,10 @@ public class HelloWorld
   JLabel S1 = new JLabel("  "); //spacing invisible label
   JLabel S2 = new JLabel("  "); //spacing invisible label
   
+  /**
+   * Default constructor
+   * @throws LayoutParseException If something goes wrong when parsing the Ascii art drawing
+   */
   public HelloWorld() 
       throws LayoutParseException 
   {
@@ -65,6 +74,11 @@ public class HelloWorld
     L.setFont(labelFont);
   }
   
+  /**
+   * 
+   * @param args Ignored
+   * @throws Exception If something goes wrong
+   */
   public static void main(String[] args) 
       throws Exception 
   {

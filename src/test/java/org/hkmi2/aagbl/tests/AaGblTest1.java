@@ -39,10 +39,21 @@ public class AaGblTest1 extends JFrame
   JTextArea cD = new JTextArea("D");
   AsciiArtGridBagLayout ly;
   
+  /**
+   * 
+   * @throws HeadlessException _
+   * @throws LayoutParseException _
+   */
   public AaGblTest1() throws HeadlessException, LayoutParseException {
     this(" ");
   }
 
+  /**
+   * 
+   * @param title _
+   * @throws HeadlessException _
+   * @throws LayoutParseException _
+   */
   public AaGblTest1(String title) throws HeadlessException, LayoutParseException {
     super(title);
     ly = new AsciiArtGridBagLayout(spec);
@@ -56,6 +67,12 @@ public class AaGblTest1 extends JFrame
     setContentPane(mainPanel);
   }
 
+  /**
+   * 
+   * @param args _
+   * @throws HeadlessException _
+   * @throws LayoutParseException _
+   */
   public static void main(String[] args) throws HeadlessException, LayoutParseException {
     AaGblTest1 frm = new AaGblTest1();
     frm.setSize(800, 600);

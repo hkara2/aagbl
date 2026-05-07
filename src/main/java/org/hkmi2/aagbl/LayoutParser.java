@@ -5,17 +5,32 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The parser that analyzes the Ascii art drawing
+ * @author hkaradimas
+ *
+ */
 public class LayoutParser
 {
+  /** value that corresponds to the presence of horizontal filling chars ('&lt;', '&gt;') */
   public static final int FILL_HORIZ = 1;
+  /** value that corresponds to the presence of a vertical filling char ('^') */
   public static final int FILL_VERT = 2;
   
-  public static boolean debugParser = false; //set to true to emit messages on System.out while parsing
+  /** set to true to emit messages on System.out while parsing */
+  public static boolean debugParser = false; 
   
   ArrayList<CRect> rects = new ArrayList<>();
   
+  /**
+   * Return the CRects
+   * @return The list of CRects
+   */
   public ArrayList<CRect> getCRects() { return rects; }
   
+  /**
+   * Default constructor
+   */
   public LayoutParser() {
   }
 
@@ -82,14 +97,29 @@ public class LayoutParser
     return null;
   }
 
+  /**
+   * Is c compatible with the start of a name
+   * @param c The char to test
+   * @return true if c is OK for the start of a name
+   */
   public boolean isNameStart(char c) {
     return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z');
   }
   
+  /**
+   * Is c compatible with a name
+   * @param c The char to test
+   * @return true if c is OK for a name
+   */
   public boolean isNameChar(char c) {
     return ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z') || ('0' <= c && c <= '9');
   }
   
+  /**
+   * Process the flags : if '^' is encountered, add FILL_VERT, if '&lt;' or '&gt;' is encountered, add FILL_HORIZ.
+   * @param spec The spec to process
+   * @return the evaluated flags
+   */
   public int evalFlags(String spec) {
     int flags = 0;
     for (char c : spec.toCharArray()) {
@@ -99,6 +129,11 @@ public class LayoutParser
     return flags;
   }
   
+  /**
+   * Remove the flags from the spec.
+   * @param spec The spec to process
+   * @return The spec with the flags '^', '&lt;', '&gt;' replaced with ' '
+   */
   public String removeFlags(String spec) {
     StringBuilder sb = new StringBuilder();
     for (char c : spec.toCharArray()) {
@@ -108,6 +143,11 @@ public class LayoutParser
     return sb.toString();
   }
   
+  /**
+   * Is the name a valid name
+   * @param str String to test
+   * @return true if str is a valid name
+   */
   public boolean isNameValid(String str) {
     if (str.length() < 1) return false;
     if (!isNameStart(str.charAt(0))) return false;

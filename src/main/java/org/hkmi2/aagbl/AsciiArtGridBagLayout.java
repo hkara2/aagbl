@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -25,6 +26,8 @@ import javax.swing.JPanel;
  * <li> For each of you components, call {@link #setConstraints(String, Component)} with
  *   the name given in your Ascii art and your component
  * <li> Use this layout, for example in a {@link JPanel} (look in the tests dir for more examples)
+ * <li> Add all your components to the container. As the container has hour layout, it will
+ *   know how to manage each component as it is added.
  * </ul>
  * 
  * Example code (taken from the HelloWorld class (a subclass of JFrame) in the tests) :
@@ -124,10 +127,15 @@ extends GridBagLayout
     parser.parseSpec(lines);
     gblb = new GridBagLayoutBuilder(parser.getCRects());
     crects = parser.getCRects();
-    //S ystem.out.println("Rects :");
-    for (@SuppressWarnings("unused") CRect r : crects) {
-      //S ystem.out.println("Rect"+r);
+    //for all CRrects whose name starts with _space, add a JLabel(" ") component
+    //so that they are also taken into account in the geometry.
+    for (CRect r:crects) {
+      if (r.name.startsWith("_space")) setConstraints(r.name, new JLabel(" "));
     }
+    //S ystem.out.println("Rects :");
+    //for (@SuppressWarnings("unused") CRect r : crects) {
+      //S ystem.out.println("Rect"+r);
+    //}
   }
 
   /**
@@ -339,6 +347,11 @@ extends GridBagLayout
       return gblb.getInsetsToUse();
   }
   
+  /**
+   * Set the {@link Insets} to use as default instead of the default ones in CRect.
+   * Call this before calling <code>setConstraints</code>
+   * @param newInsets The new {@link Insets} object
+   */
   public void setInsetsToUse(Insets newInsets) {
       if (gblb != null) gblb.setInsetsToUse(newInsets);
   }

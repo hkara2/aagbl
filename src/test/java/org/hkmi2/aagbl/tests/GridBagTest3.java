@@ -19,9 +19,10 @@ import org.hkmi2.aagbl.LayoutParseException;
 import org.hkmi2.aagbl.LayoutParser;
 
 /**
- * Test expansion in rect
+ * Further manual tests of AsciiArtGridBagLayout.
+ * Here we test how empty rects are tolerated
  */
-public class GridBagTest2
+public class GridBagTest3
 implements ActionListener
 {
   AsciiArtGridBagLayout aagbl;
@@ -31,13 +32,15 @@ implements ActionListener
   JTextField cD = new JTextField("D");
   JPanel mainPanel = new JPanel();
   
-  /** constructor */
-  public GridBagTest2() {
+  /**
+   * Constructor
+   */
+  public GridBagTest3() {
   }
 
-  /** initialization
-   * 
-   * @throws LayoutParseException if layout spec invalid
+  /**
+   * Initialization
+   * @throws LayoutParseException If layout spec is invalid
    */
   public void init() throws LayoutParseException {
     String spec = 
@@ -45,44 +48,42 @@ implements ActionListener
         "|A    | ^               |\n"+
         "|     |<        B      >|\n"+
         "|     |                 |\n"+
-        "+-----+-----------------+\n"+
-        "|     |                 |\n"+
-        "|     |                 |\n"+
-        "|     |                 |\n"+
-        "|< C >|                 |\n"+
-        "|     |                 |\n"+
-        "|     |                 |\n"+
-        "|     |                D|\n"+
-        "+-----+-----------------+\n"
+        "+-----+--------+--------+\n"+
+        "|     |        |    ^   |\n"+
+        "|     |        |        |\n"+
+        "|     +--------+        |\n"+
+        "|< C >|        |        |\n"+
+        "|     |        |        |\n"+
+        "|     |        +--------+\n"+
+        "|     |        |       D|\n"+
+        "+-----+--------+--------+\n"
     ;
     aagbl = new AsciiArtGridBagLayout(spec);
-    aagbl.setInsetsToUse(new Insets(30, 30, 30, 30));
     Object[] allComponents = {"A", cA, "B", cB, "C", cC, "D", cD};
     aagbl.setConstraints(AsciiArtGridBagLayout.makeMap(allComponents));
     cC.addActionListener(this);
     mainPanel.setLayout(aagbl);
     aagbl.addAllComponentsTo(mainPanel);
-
   }
   
   /**
    * Run the test
    */
   public void run() {
-    JFrame jfrm = new JFrame("testGridBag2()");
+    JFrame jfrm = new JFrame("testGridBag3()");
     jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     jfrm.setContentPane(mainPanel);
     jfrm.pack();
     jfrm.setVisible(true);    
   }
   
-  /** main method
-   * 
+  /**
+   * Main method
    * @param args _
    * @throws Exception _
    */
   public static void main(String[] args) throws Exception {
-    GridBagTest2 app = new GridBagTest2();
+    GridBagTest3 app = new GridBagTest3();
     app.init();
     app.run();
   }

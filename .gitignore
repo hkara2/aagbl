@@ -30,6 +30,8 @@ gradle-app.setting
 # Eclipse preferences
 .settings
 
-# Local files
-local
+# local dir : (pc - dependent) notes or scripts
+/local/
+
+# Eclipse builds into the "bin" dir
 /bin/

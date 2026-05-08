@@ -6,7 +6,22 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * The parser that analyzes the Ascii art drawing
+ * The parser that analyzes the Ascii art drawing.
+ * <br>
+ * Example of a drawing :
+ * <pre>
+ *   String aa =
+ *     "+--------------------------------------------+\n"+
+ *     "|                                            |\n"+
+ *     "|                     L                      |\n"+
+ *     "|                                            |\n"+
+ *     "+--------------+--------------+--------------+\n"+
+ *     "|              |              |              |\n"+
+ *     "|      S1      |&lt;     B      &gt;|      S2      |\n"+
+ *     "|              |              |              |\n"+
+ *     "+--------------+--------------+--------------+\n";
+ * </pre>
+ * See the documentation (<code>layout-definition.md</code>) for more explanations of the conventions used in the drawings.
  * @author hkaradimas
  *
  */

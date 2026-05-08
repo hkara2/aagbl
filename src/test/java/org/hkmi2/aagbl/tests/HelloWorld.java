@@ -28,15 +28,13 @@ public class HelloWorld
       "|                                            |\n"+
       "+--------------+--------------+--------------+\n"+
       "|              |              |              |\n"+
-      "|      S1      |<     B      >|      S2      |\n"+
+      "|              |<     B      >|              |\n"+
       "|              |              |              |\n"+
       "+--------------+--------------+--------------+\n";
   
   AsciiArtGridBagLayout aagbl;
   JLabel L = new JLabel("Hello, world !");
   JButton B = new JButton("OK");
-  JLabel S1 = new JLabel("  "); //spacing invisible label
-  JLabel S2 = new JLabel("  "); //spacing invisible label
   
   /**
    * Default constructor
@@ -53,10 +51,8 @@ public class HelloWorld
     //associate the constraint rectangles with our components
     aagbl.setConstraints("B", B);
     aagbl.setConstraints("L", L);
-    aagbl.setConstraints("S1", S1);
-    aagbl.setConstraints("S2", S2);
     //Alternative method to set constraints :
-    //aagbl.setConstraints(AsciiArtGridBagLayout.makeMap(new Object[] {"B",B,"L",L,"S1",S1,"S2",S2}));
+    //aagbl.setConstraints(AsciiArtGridBagLayout.makeMap(new Object[] {"B",B,"L",L}));
     //now set this as our layout
     setLayout(aagbl);
     //and add all the components

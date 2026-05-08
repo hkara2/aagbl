@@ -5,11 +5,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.swing.JLabel;
+
 /**
  * The parser that analyzes the Ascii art drawing.
+ * Typically used internally by {@link AsciiArtGridBagLayout}, no need to use it
+ * directly.
  * <br>
  * Example of a drawing :
- * <pre>
+ * 
+ * <pre style="font-weight:bold"><code>
  *   String aa =
  *     "+--------------------------------------------+\n"+
  *     "|                                            |\n"+
@@ -20,8 +25,15 @@ import java.util.List;
  *     "|      S1      |&lt;     B      &gt;|      S2      |\n"+
  *     "|              |              |              |\n"+
  *     "+--------------+--------------+--------------+\n";
- * </pre>
+ * </code></pre>
+ * 
  * See the documentation (<code>layout-definition.md</code>) for more explanations of the conventions used in the drawings.
+ * 
+ * Note that if you don't give a name to a rectangle, it will be automatically
+ * set to "_space" followed by a sequential number, and will later contain a {@link JLabel} with
+ * a {@link String} of just a space " ". This is necessary to get a correct dispatch of
+ * the layout's geometry. 
+ * 
  * @author hkaradimas
  *
  */
@@ -257,6 +269,12 @@ public class LayoutParser
       if (r.lineOfName == 1) r.valign = 1;
       if (r.lineOfName == r.h) r.valign = 3;
       r.h++;
+    }
+    //also for all CRect that don't have a name, treat them as space and give them the
+    //name _space<n>, starting with 1
+    int spacenr = 1;
+    for (CRect r : rects) {
+        if (r.name == null) r.name = "_space" + spacenr++;
     }
   }
   

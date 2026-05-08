@@ -4,7 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 /**
- *  component rectangle. Used internally by the {@link GridBagLayoutBuilder} and the
+ *  Component rectangle, that corresponds to a rectangle that was drawn on the supplied
+ *   Ascii art drawing. Used internally by the {@link GridBagLayoutBuilder} and the
  *  {@link LayoutParser} when computing each {@link GridBagConstraints}.
  *  Some fine-tuning can be achieved by
  *  changing the rect before the constraints get generated.

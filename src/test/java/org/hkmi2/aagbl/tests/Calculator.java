@@ -2,6 +2,7 @@ package org.hkmi2.aagbl.tests;
 
 import java.awt.Component;
 import java.awt.HeadlessException;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -71,6 +72,7 @@ extends JFrame
   {
           //LayoutParser.debugParser = true; //uncomment to see parsing details
   	  AsciiArtGridBagLayout gbl = new AsciiArtGridBagLayout(aa);
+  	  gbl.setInsetsToUse(new Insets(1, 1, 1, 1));
   	  //create the components
   	  JTextField D = new JTextField(12);
           JButton B0 = new JButton("0");

@@ -1,7 +1,8 @@
 package org.hkmi2.aagbl;
 
 /**
- * Exception specialized class
+ * Exception specialized class that gets thrown when there was an error in
+ * the parsing of an Ascii art layout file.
  * @see Exception
  * @author hkaradimas
  *

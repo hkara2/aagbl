@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -11,8 +12,37 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JPanel;
+
 /**
  * A variant of {@link GridBagLayout} that can be initialized using ascii art.
+ * This is the main class to use. Under the hood, it uses a {@link GridBagLayoutBuilder}
+ * object.
+ * To use :
+ * <ul>
+ * <li> Make a String that represents the Ascii art of your layout (see the doc for this)
+ * <li> Tweak some values (Weightx for example) for some rectangles if needed
+ * <li> For each of you components, call {@link #setConstraints(String, Component)} with
+ *   the name given in your Ascii art and your component
+ * <li> Use this layout, for example in a {@link JPanel} (look in the tests dir for more examples)
+ * </ul>
+ * 
+ * Example code (taken from the HelloWorld class (a subclass of JFrame) in the tests) :
+ * <pre>
+ *   //create our layout
+ *   aagbl = new AsciiArtGridBagLayout(aa);
+ *   //associate the constraint rectangles with our components
+ *   aagbl.setConstraints("B", B);
+ *   aagbl.setConstraints("L", L);
+ *   aagbl.setConstraints("S1", S1);
+ *   aagbl.setConstraints("S2", S2);
+ *   //Alternative method to set constraints :
+ *   //aagbl.setConstraints(AsciiArtGridBagLayout.makeMap(new Object[] {"B",B,"L",L,"S1",S1,"S2",S2}));
+ *   //now set this as our layout
+ *   setLayout(aagbl);
+ *   //and add all the components
+ *   aagbl.addAllComponentsTo(getContentPane());
+ * </pre>
  * @author Harry
  *
  */
@@ -115,8 +145,10 @@ extends GridBagLayout
   }
   
   /**
-   * Set the constraints for all the components of the map
+   * Set the constraints for all the components of the map.
+   * You can set the constraints for all your components at once using this method.
    * @param cm The component by name map, each name must be the name used in the layout drawing.
+   * @see #makeMap(Object[]) for an easy way to build a map
    */
   public void setConstraints(Map<String, Component> cm) {
     for (String name : cm.keySet()) {
@@ -170,6 +202,20 @@ extends GridBagLayout
    * @return A list of all the component names
    */
   public List<String> getAllComponentNames() { return new ArrayList<>(componentsByName.keySet()); }
+  
+  /**
+   * Return a String that contains a comma-separated list of all component names
+   * @return The list, e.g. "a,b,x"
+   */
+  public String getAllComponentsAsCsNameList() {
+      StringBuilder sb = new StringBuilder();
+      List<String> allNames = getAllComponentNames();
+      for (String name:allNames) {
+          if (sb.length() > 0) sb.append(',');
+          sb.append(name);
+      }
+      return sb.toString();
+  }
   
   /**
    * Get all the constraint names
@@ -275,5 +321,25 @@ extends GridBagLayout
     }
     return allNames;
   }
+
+  /**
+   * Get the builder that is used.
+   * @return The builder instance
+   */
+  public GridBagLayoutBuilder getGridBagLayoutBuilder() { return gblb; }
   
+  /**
+   * Gets the Insets to use for future calls to {@link #setConstraints(String, Component)}. Calls getInsetsToUse() on the internal 
+   * {@link GridBagLayoutBuilder}. If the {@link GridBagLayoutBuilder} is null, returns null,
+   * else returns the current {@link Insets} to use. 
+   * @return The Insets to use, if null default value in CRect(s) will be kept
+   */
+  public Insets getInsetsToUse() {
+      if (gblb == null) return null;
+      return gblb.getInsetsToUse();
+  }
+  
+  public void setInsetsToUse(Insets newInsets) {
+      if (gblb != null) gblb.setInsetsToUse(newInsets);
+  }
 }

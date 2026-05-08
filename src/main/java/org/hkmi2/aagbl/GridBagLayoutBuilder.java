@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * a Ascii art drawing, and parsed using a LayoutParser)
  * This is a utility class that handles a list of components and rectangles, and computes
  * the {@link GridBagConstraints} for each component.
- * This class is used by {@link AsciiArtGridBagLayout}, there are few reasons to use this class
+ * This class is created and used by {@link AsciiArtGridBagLayout}, there are few reasons to use this class
  * directly.
  * @author hkaradimas
  *
@@ -62,8 +62,9 @@ public class GridBagLayoutBuilder
   /**
    * get the JPanel
    * @return The contained JPanel
+   * @deprecated will be removed
    */
-  public JPanel getJPanel() { return pnl; }
+  private JPanel getJPanel() { return pnl; }
     
   /**
    * Find a rectangle with the given name
@@ -81,8 +82,9 @@ public class GridBagLayoutBuilder
    * Add the component with the given name, and no contraints
    * @param name The name of the component to add (use the name of the variable that contains this component if you don't want hard to find bugs)
    * @param comp The component to add
+   * @deprecated will be removed
    */
-  public void add(String name, Component comp) {
+  private void add(String name, Component comp) {
     add(name, comp, null);
   }
   
@@ -91,8 +93,9 @@ public class GridBagLayoutBuilder
    * @param name The name of the component to add (use the name of the variable that contains this component if you don't want hard to find bugs)
    * @param comp The component to add
    * @param extraConstraints The constraints to use
+   * @deprecated will be removed
    */
-  public void add(String name, Component comp, GridBagConstraints extraConstraints) {
+  private void add(String name, Component comp, GridBagConstraints extraConstraints) {
     GridBagConstraints cons = makeGridBagConstraints(name);
     if (extraConstraints != null) {
       cons.anchor = extraConstraints.anchor;

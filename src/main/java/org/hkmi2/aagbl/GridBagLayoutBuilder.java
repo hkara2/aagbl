@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 /**
  * This object builds a series of GridBagLayouts from a list of rectangles (that were defined in
  * a Ascii art drawing, and parsed using a LayoutParser)
- * Utility class that handles a list of components and rectangles, and computes
+ * This is a utility class that handles a list of components and rectangles, and computes
  * the {@link GridBagConstraints} for each component.
  * This class is used by {@link AsciiArtGridBagLayout}, there are few reasons to use this class
  * directly.
@@ -27,10 +27,11 @@ public class GridBagLayoutBuilder
   
   List<CRect> rects;
   GridBagLayout gbl = new GridBagLayout();
-  JPanel pnl = new JPanel();
+  JPanel pnl = new JPanel(); //internal JPanel, will be deprecated soon
   ArrayList<Component> components = new ArrayList<Component>();
   int maxx;
   int maxy;
+  Insets insetsToUse; //default is null
   
   /**
    * Default constructor
@@ -164,7 +165,7 @@ public class GridBagLayoutBuilder
       }//switch
       cons.ipadx = r.ipadx;
       cons.ipady = r.ipady;
-      cons.insets = r.insets;
+      cons.insets = (insetsToUse != null) ? insetsToUse : r.insets;
       if (debugBuilder) System.out.println("cons.fill="+cons.fill);
     }
     else {
@@ -253,6 +254,24 @@ public class GridBagLayoutBuilder
       CRect rect = findCRect(name);
       if (rect != null) rect.insets = insets;
     }
+  }
+
+  /**
+   * Gets the {@link Insets} to use. If null, it means we keep the default {@link Insets}
+   * of the CRect class.
+   * @return An {@link Insets} object or null
+   */
+  public Insets getInsetsToUse() {
+    return insetsToUse;
+  }
+  
+  /**
+   * Sets the insets to use. Default is null, which means we keep the default insets of 5
+   * that are in the CRects.
+   * @param insetsToUse An {@link Insets} object or null
+   */
+  public void setInsetsToUse(Insets insetsToUse) {
+    this.insetsToUse = insetsToUse;
   }  
   
 }

@@ -6,6 +6,9 @@ You can only make rectangles, inside one big rectangle.
 The rectangles must be disjoint, they can not be nested.
 
 In each rectangle, you can put a name (a letter, followed by letters or numbers).
+If you don't put a name inside a rectangle, it will be considered space
+(it will be assigned a name "_space" followed by a sequential number).
+Space rectangles will be associated with a JLabel(" ") component.
 
 If certain flags are encountered, a mode is set :
 

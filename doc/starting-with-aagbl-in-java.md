@@ -23,7 +23,7 @@ Here is our simple layout drawing :
 |                                            |
 +--------------+--------------+--------------+
 |              |              |              |
-|      S1      |<     B      >|      S2      |
+|              |<     B      >|              |
 |              |              |              |
 +--------------+--------------+--------------+
 ~~~~
@@ -66,7 +66,7 @@ Now let's declare our ASCII art drawing for the layout as a simple String (field
       "|                                            |\n"+
       "+--------------+--------------+--------------+\n"+
       "|              |              |              |\n"+
-      "|      S1      |<     B      >|      S2      |\n"+
+      "|              |<     B      >|              |\n"+
       "|              |              |              |\n"+
       "+--------------+--------------+--------------+\n";
 ~~~~
@@ -80,8 +80,6 @@ We declare the other fields :
   AsciiArtGridBagLayout aagbl;
   JLabel L = new JLabel("Hello, world !");
   JButton B = new JButton("OK");
-  JLabel S1 = new JLabel("  "); //spacing invisible label
-  JLabel S2 = new JLabel("  "); //spacing invisible label
   
 ~~~~
 
@@ -113,8 +111,6 @@ Now the important part :
     //associate the constraint rectangles with our components
     aagbl.setConstraints("B", B);
     aagbl.setConstraints("L", L);
-    aagbl.setConstraints("S1", S1);
-    aagbl.setConstraints("S2", S2);
 ~~~~
 
 The Layout is now ready, we can set it as the layout of this frame
@@ -177,7 +173,7 @@ and then use the method setConstraints that takes a map argument.
 In our class, this would be :
 
 ~~~~ java
-    aagbl.setConstraints(AsciiArtGridBagLayout.makeMap(new Object[] {"B",B,"L",L,"S1",S1,"S2",S2}));
+    aagbl.setConstraints(AsciiArtGridBagLayout.makeMap(new Object[] {"B",B,"L",L}));
 ~~~~
 
 

@@ -13,7 +13,9 @@ directly accessible.
 First you must make a drawing of your layout, using '-', '+', '|' as delimiters.
 
 Inside each rectangle, put a name. This name can later be associated with the
-component that you will put there.
+component that you will put there (you can omit a name, if the rectangle should
+stay empty. An internal name ('_space' followed by a number) will be attributed,
+and a JLabel(" ") will automatically be attributed to this rectangle).
 
 Example ascii art layout :
 
@@ -92,8 +94,6 @@ the constraints it has to apply to it. Example :
 
     gbl.setConstraints("B", B);
     gbl.setConstraints("L", L);
-    gbl.setConstraints("S1", S1);
-    gbl.setConstraints("S2", S2);
 
 The layout can then be used in your container, ex :
 
@@ -104,10 +104,11 @@ You can add your components to the container :
 
     add(L);
     add(B);
-    add(S1);
-    add(S2);
 
-That's all there is to laying out the components. The rest is traditional java swing programming.
+As the gbl layout already knowns about these components, it will be able to
+handle their placement accordingly.
+That's all there is to laying out the components.
+The rest is traditional java swing programming.
 
 ## 4. Tricks that will make your life easier
 A few constructs have been added to the library to make programming less repetitive.
@@ -154,13 +155,6 @@ names with commas. Ex :
 
 The constraints that can be set this way are `weightx`, `weighty`, `ipadx`, `ipady`.
 
-If you use this library within a Groovy shell, things are even simpler, if you set all
-your components in the binding (i.e. without declaring them with _def_ or a type).
-
-Then you only have to use a generic call to set all the component constraints :
-
-    gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
-
 
 ### 4.4. Using groovy shell
 
@@ -168,6 +162,13 @@ Hand-crafted layouts are are good for small components and small scripts.
 The [groovy shell](https://groovy-lang.org/groovysh.html) is excellent as a scripting language.
 Thanks to the `SwingBuilder` object, Swing GUIs are easy to build.
 Groovy's capabilites make the use of `AsciiArtGridBagLayout` even more compact.
+
+If you use this library within a Groovy shell, things are even simpler, if you set all
+your components in the binding (i.e. without declaring them with  _def_  or a type).
+
+Then you only have to use a generic call to set all the component constraints :
+
+    gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
 
 See a "Hello world" example here :
 
@@ -179,5 +180,11 @@ You can also have a look at the Calculator demo written as a groovy script to se
 
 For step-by-step instructions on using Groovy with aagbl, have
 a look at [starting-with-aagbl](doc/starting-with-aagbl-in-groovy.md).
+
+### 4.5. Test files
+
+The tests, in the `main/java/tests` directory, are useful to study and give little
+tips and tricks that are beyond this simple readme file.
+
 
 (2026)

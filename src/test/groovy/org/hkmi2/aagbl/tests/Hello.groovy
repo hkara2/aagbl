@@ -39,8 +39,10 @@ frm = swb.frame(
 	b = button(text: "OK", actionPerformed: {e-> frm.setVisible(false); frm.dispose()} )
 }
 
-//in v1.0 you had to write : 'a,b'.split(',').each {
-gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
+//Thanks to Groovy's binding, we can use all the variables programmatically
+gbl.allCRectNames.each {
+    if (binding.hasVariable(it)) gbl.setConstraints(it, binding.getVariable(it))
+}
 
 frm.contentPane.setLayout(gbl)
 gbl.addAllComponentsTo(frm.contentPane)

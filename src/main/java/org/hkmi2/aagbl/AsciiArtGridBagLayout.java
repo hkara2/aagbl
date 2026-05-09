@@ -141,10 +141,12 @@ extends GridBagLayout
   /**
    * Set the constraints for the given component. Used also to "declare" the components
    * that will be affected by the layout constraints.
+   * If componentName is null, or comp is null, this method does nothing.
    * @param componentName The name the component has in the layout
    * @param comp The actual component that will get drawn 
    */
   public void setConstraints(String componentName, Component comp) {
+    if (comp == null || componentName == null) return;
     GridBagConstraints cons = gblb.makeGridBagConstraints(componentName);
     super.setConstraints(comp, cons);
     //comp.setPreferredSize(new Dimension(0,0));
@@ -155,6 +157,7 @@ extends GridBagLayout
   /**
    * Set the constraints for all the components of the map.
    * You can set the constraints for all your components at once using this method.
+   * This method calls {@link #setConstraints(String, Component)} repeatedly for all the map.
    * @param cm The component by name map, each name must be the name used in the layout drawing.
    * @see #makeMap(Object[]) for an easy way to build a map
    */

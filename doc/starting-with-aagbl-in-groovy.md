@@ -76,19 +76,22 @@ A few remarks here.
 
 - As we are in a Groovy *script*, the variables that are not
 declared (either with a type or with <code>def</code>) are in the *binding* context,
-that is they are global to the script. So <code>a</code> and <code>b</code> will be visible to the 
-rest of the script.
+that is they are global to the script. So <code>a</code> and <code>b</code> will be visible to the rest of the script.
 - With the swing builder you can set a lot of properties directly when the
 component is created. This is why I like to put each argument on a separate line.
 - Notice how you can put the code for <code>actionPerformed</code> directly in the code that creates the button.
 
 Now, using groovy's *binding* context, we have access to all the variables of
-the binding. We can use this small code line to set the constraints to all the
+the binding. We can use this small code snippet to set the constraints to all the
 widgets we have declared in the swing builder :
 
 ~~~~ groovy
-gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
+gbl.allCRectNames.each {
+    if (binding.hasVariable(it)) gbl.setConstraints(it, binding.getVariable(it))
+}
 ~~~~
+
+This piece of code can be used as is for all your Groovy scripts with aagbl !
 
 The rest of the code is fairly standard code to tell the frame to use our
 layout, then add all our managed components to the frame (thanks to the
@@ -111,20 +114,21 @@ in the following directory :
 C:\app\groovy\groovy-4.0.8
 ~~~~
 
-I have downloaded <code>aagbl-1.1.jar</code> in <code>c:\temp</code>.
-I have downloaded the source code of aagbl in <code>c:\temp</code>, and unzipped it in
-<code>c:\temp\aagbl-1.1</code>.
+Inside the <code>C:\temp</code> directory I have unzipped the two distribution zips : 
+<code>aagbl-@version@.jar</code> and <code>aagbl-tests-@version@.jar</code> .
 
-Now let's open a command line window (cmd) and go to the base of groovy test files in the source directory :
+Now let's open a command line window (cmd) to launch the test file "Hello.groovy" :
+
+First we set the CLASSPATH variable so Groovy will find the aagbl library :
 
 ~~~~ dos
-cd C:\temp\aagbl-1.1\src\test\groovy
+set CLASSPATH=c:\temp\aagbl-@version@\aagbl-@version@.jar
 ~~~~
 
-Set the CLASSPATH variable so Groovy will find the aagbl library :
-
+Second we go to the base of groovy test files in the source directory :
+ 
 ~~~~ dos
-set CLASSPATH=c:\temp\aagbl-1.1.jar
+cd C:\temp\aagbl-tests-@version@\groovy
 ~~~~
 
 And now let's launch Groovy to run our Hello script (which is already in the distribution) :
@@ -149,4 +153,3 @@ C:\app\groovy\groovy-4.0.8\bin\groovy org/hkmi2/aagbl/tests/Calculator
 This should display the calculator.
 
 Now have fun making small windows !
- 

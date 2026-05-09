@@ -166,9 +166,13 @@ Groovy's capabilites make the use of `AsciiArtGridBagLayout` even more compact.
 If you use this library within a Groovy shell, things are even simpler, if you set all
 your components in the binding (i.e. without declaring them with  _def_  or a type).
 
-Then you only have to use a generic call to set all the component constraints :
+Then you only have to use this generic code snippet to set all the component constraints :
 
-    gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
+~~~~ groovy
+gbl.allCRectNames.each {
+    if (binding.hasVariable(it)) gbl.setConstraints(it, binding.getVariable(it))
+}
+~~~~
 
 See a "Hello world" example here :
 

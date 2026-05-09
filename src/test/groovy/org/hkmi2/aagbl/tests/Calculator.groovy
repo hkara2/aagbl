@@ -41,6 +41,7 @@ aa =
 '''
 
 gbl = new AsciiArtGridBagLayout(aa)
+gbl.setInsetsToUse(new Insets(1,1,1,1)) //make default Insets smaller so the calculator looks nicer
 swb = new SwingBuilder()
 
 //the generic "button handler" closure, used for all buttons
@@ -73,6 +74,11 @@ frm = swb.frame(title: "Calculator", defaultCloseOperation: JFrame.EXIT_ON_CLOSE
 }
 
 //In v1.0 you had to write : 'D,B0,B1,B2,B3,B4,B5,B6,B7,B8,B9,BD,BS,BP,BM,BZ,BC,BE,L1,L2'.split(',').each {
+//Now in 1.1 in groovy all you need is this code :
+gbl.allCRectNames.each {
+    if (binding.hasVariable(it)) gbl.setConstraints(it, binding.getVariable(it))
+}
+
 gbl.allCRectNames.each { gbl.setConstraints(it, binding[it]) }
 
 frm.contentPane.setLayout(gbl)

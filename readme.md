@@ -109,8 +109,8 @@ Now that all the constraints have been set, and the layout associated with the c
 You can add your components to the container :
 
 ~~~~ java
-    add(L);
-    add(B);
+add(L);
+add(B);
 ~~~~
 
 As the gbl layout already knowns about these components, it will be able to
@@ -148,8 +148,8 @@ Here is an example from the `Calculator.java` demo :
 Object[] objs = new Object[] { "D",D,"B0",B0,"B1",B1,"B2",B2,"B3",B3,
     "B4",B4,"B5",B5,"B6",B6,"B7",B7,"B8",B8,"B9",B9, "BD",BD,"BS",BS,
     "BP",BP,"BM",BM,"BZ",BZ,"BC",BC,"BE",BE,"L1",L1,"L2",L2 };
-    HashMap<String, Component> componentsByName = AsciiArtGridBagLayout.makeMap(objs);
-          gbl.setConstraints(componentsByName);
+HashMap<String, Component> componentsByName = AsciiArtGridBagLayout.makeMap(objs);
+gbl.setConstraints(componentsByName);
 ~~~~
 
 ### 4.3. Setting a constraint on several components with one call
